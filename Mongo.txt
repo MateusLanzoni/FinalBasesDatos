@@ -221,8 +221,8 @@ db.comic.insertMany([
       { "characterId": "character11", "characterName": "Joker" }
     ],
     "secondary_characters": [
-      { "villagerId": "sc1", "villagerName": "Alfred Pennyworth" },
-      { "villagerId": "sc3", "villagerName": "Mary Jane Watson" }
+      { "SCId": "sc1", "villagerName": "Alfred Pennyworth" },
+      { "SCId": "sc3", "villagerName": "Mary Jane Watson" }
     ],
     "items": [
       { "itemId": "item1", "itemName": "Sword of Destiny" },
@@ -240,8 +240,8 @@ db.comic.insertMany([
       { "characterId": "character4", "characterName": "Iron Man" }
     ],
     "secondary_characters": [
-      { "villagerId": "sc2", "villagerName": "J. Jonah Jameson" },
-      { "villagerId": "sc4", "villagerName": "Commissioner Gordon" }
+      { "SCId": "sc2", "villagerName": "J. Jonah Jameson" },
+      { "SCId": "sc4", "villagerName": "Commissioner Gordon" }
     ],
     "items": [
 
@@ -258,8 +258,8 @@ db.comic.insertMany([
       { "characterId": "character8", "characterName": "Superman" }
     ],
     "secondary_characters": [
-      { "villagerId": "sc5", "villagerName": "Aunt May" },
-      { "villagerId": "sc1", "villagerName": "Alfred Pennyworth" }
+      { "SCId": "sc5", "villagerName": "Aunt May" },
+      { "SCId": "sc1", "villagerName": "Alfred Pennyworth" }
     ],
     "items": [
       { "itemId": "item3", "itemName": "Bow of Eternity" },
@@ -277,8 +277,8 @@ db.comic.insertMany([
       { "characterId": "character13", "characterName": "Thanos" }
     ],
     "secondary_characters": [
-      { "villagerId": "sc2", "villagerName": "J. Jonah Jameson" },
-      { "villagerId": "sc3", "villagerName": "Mary Jane Watson" }
+      { "SCId": "sc2", "villagerName": "J. Jonah Jameson" },
+      { "SCId": "sc3", "villagerName": "Mary Jane Watson" }
     ],
     "items": [
 
@@ -295,8 +295,8 @@ db.comic.insertMany([
       { "characterId": "character9", "characterName": "Green Lantern" }
     ],
     "secondary_characters": [
-      { "villagerId": "sc4", "villagerName": "Commissioner Gordon" },
-      { "villagerId": "sc5", "villagerName": "Aunt May" }
+      { "SCId": "sc4", "villagerName": "Commissioner Gordon" },
+      { "SCId": "sc5", "villagerName": "Aunt May" }
     ],
     "items": [
       { "itemId": "item2", "itemName": "Shield of Valor" },

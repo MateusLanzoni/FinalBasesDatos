@@ -32,7 +32,7 @@ CREATE TABLE characters (
 );
 
 CREATE TABLE secondary_characters (
-    villager_id INT PRIMARY KEY,
+    SC_id INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(1000),
     availability BOOLEAN DEFAULT TRUE
