@@ -106,7 +106,7 @@ db.character.insertMany([
   }
 ]);
 
-db.villager.insertMany([
+db.secondary_character.insertMany([
   {
     "_id": "sc1",
     "name": "Alfred Pennyworth",
@@ -175,33 +175,33 @@ db.items.insertMany([
 ]
 );
 
-db.customer.insertMany([
+db.buyer.insertMany([
   {
-    "_id": "customer1",
+    "_id": "buyer1",
     "name": "John Doe",
     "birthday": "1985-03-15",
     "email": "johndoe@example.com"
   },
   {
-    "_id": "customer2",
+    "_id": "buyer2",
     "name": "Jane Smith",
     "birthday": "1990-07-24",
     "email": "janesmith@example.com"
   },
   {
-    "_id": "customer3",
+    "_id": "buyer3",
     "name": "Michael Johnson",
     "birthday": "1978-12-05",
     "email": "michaeljohnson@example.com"
   },
   {
-    "_id": "customer4",
+    "_id": "buyer4",
     "name": "Emily Davis",
     "birthday": "2001-02-10",
     "email": "emilydavis@example.com"
   },
   {
-    "_id": "customer5",
+    "_id": "buyer5",
     "name": "David Brown",
     "birthday": "1995-11-30",
     "email": "davidbrown@example.com"
@@ -311,42 +311,42 @@ db.transaction.insertMany([
   {
     "_id": "transaction1",
     "comic": { "comicId": "comic1", "title": "Spider-Man: Web of Shadows" },
-    "customer": { "customerId": "customer1", "name": "John Doe" },
+    "buyer": { "buyerId": "buyer1", "name": "John Doe" },
     "purchase_date": "2024-11-10",
     "total_amount": 9.99
   },
   {
     "_id": "transaction2",
     "comic": { "comicId": "comic2", "title": "Batman: The Dark Knight Returns" },
-    "customer": { "customerId": "customer2", "name": "Jane Smith" },
+    "buyer": { "buyerId": "buyer2", "name": "Jane Smith" },
     "purchase_date": "2024-11-11",
     "total_amount": 14.99
   },
   {
     "_id": "transaction3",
     "comic": { "comicId": "comic3", "title": "Wonder Woman: Rise of the Amazons" },
-    "customer": { "customerId": "customer3", "name": "Michael Johnson" },
+    "buyer": { "buyerId": "buyer3", "name": "Michael Johnson" },
     "purchase_date": "2024-11-12",
     "total_amount": 12.99
   },
   {
     "_id": "transaction4",
     "comic": { "comicId": "comic4", "title": "The Avengers: Infinity Quest" },
-    "customer": { "customerId": "customer4", "name": "Emily Davis" },
+    "buyer": { "buyerId": "buyer4", "name": "Emily Davis" },
     "purchase_date": "2024-11-13",
     "total_amount": 19.99
   },
   {
     "_id": "transaction5",
     "comic": { "comicId": "comic5", "title": "The Flash: Speed Force" },
-    "customer": { "customerId": "customer5", "name": "David Brown" },
+    "buyer": { "buyerId": "buyer5", "name": "David Brown" },
     "purchase_date": "2024-11-14",
     "total_amount": 8.99
   },
   {
     "_id": "transaction6",
     "comic": { "comicId": "comic2", "title": "Batman: The Dark Knight Returns" },
-    "customer": { "customerId": "customer1", "name": "John Doe" },
+    "buyer": { "buyerId": "buyer1", "name": "John Doe" },
     "purchase_date": "2024-11-15",
     "total_amount": 14.99
   }
@@ -368,8 +368,8 @@ db.character.find(
 db.transaction.aggregate([
   {
     $group: {
-      _id: "$customer.customerId",
-      customerName: { $first: "$customer.name" },
+      _id: "$buyer.buyerId",
+      buyerName: { $first: "$buyer.name" },
       totalComicsPurchased: { $sum: 1 },
       totalAmountSpent: { $sum: "$total_amount" }
     }
@@ -382,8 +382,8 @@ db.transaction.aggregate([
   {
     $project: {
       _id: 0,
-      customerId: "$_id",
-      customerName: 1,
+      buyerId: "$_id",
+      buyerName: 1,
       totalComicsPurchased: 1,
       totalAmountSpent: 1
     }

@@ -45,7 +45,7 @@ CREATE TABLE mortal_arms (
     availability BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE customers (
+CREATE TABLE buyers (
     customer_id INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     birthday DATE,
@@ -56,7 +56,7 @@ CREATE TABLE customers (
 CREATE TABLE transactions (
     transaction_id INT PRIMARY KEY,
     comic_id INT REFERENCES comics(comic_id),
-    customer_id INT REFERENCES customers(customer_id),
+    customer_id INT REFERENCES buyers(customer_id),
     purchase_date DATE NOT NULL DEFAULT CURRENT_DATE,
     total_amount DECIMAL(10, 2) NOT NULL
 );
@@ -101,7 +101,7 @@ CREATE TABLE comics_mortal_arms (
 );
 
 
-CREATE TABLE specialoffers (
+CREATE TABLE special_offers (
     offer_id SERIAL PRIMARY KEY,
     customer_name VARCHAR(255) NOT NULL,
     customer_birthday DATE NOT NULL
@@ -114,7 +114,7 @@ CREATE OR REPLACE FUNCTION add_to_special_offers()
 RETURNS TRIGGER AS $$
 BEGIN
     IF (SELECT title FROM Comics WHERE comic_id = NEW.comic_id) = 'Superman en Calzoncillos con Batman Asustado' THEN
-        INSERT INTO specialoffers (customer_name, customer_birthday)
+        INSERT INTO special_offers (customer_name, customer_birthday)
         VALUES (
             (SELECT name FROM Customers WHERE customer_id = NEW.customer_id),
             (SELECT birthday FROM Customers WHERE customer_id = NEW.customer_id)
@@ -138,7 +138,7 @@ INSERT INTO comics (comic_id, title, description, price, category)
 VALUES (1, 'Superman en Calzoncillos con Batman Asustado', 'Im Batman', 19.99, 'action');
 
 -- Insert a customer with ID 1
-INSERT INTO customers (customer_id, name, birthday, email)
+INSERT INTO buyers (customer_id, name, birthday, email)
 VALUES (1, 'Paco', '1985-06-15', 'paco@example.com');
 
 -- Insert a transaction for the comic by the customer
@@ -181,15 +181,15 @@ VALUES
     (5, 'Spider-Man: Into the Shadows', 'Spider-Man investigates a new criminal group.', 12.99, 'adventure'),
     (6, 'Doctor Strange: Mystic Arts', 'Doctor Strange explores magical realms.', 16.99, 'fantasy');
 
--- Insert more customers (different from Paco)
-INSERT INTO customers (customer_id, name, birthday, email)
+-- Insert more buyers (different from Paco)
+INSERT INTO buyers (customer_id, name, birthday, email)
 VALUES
     (2, 'Alice', '1992-07-11', 'alice@example.com'),
     (3, 'Bob', '1989-03-22', 'bob@example.com'),
     (4, 'Catherine', '1975-10-05', 'catherine@example.com'),
     (5, 'David', '2000-12-20', 'david@example.com');
 
--- Insert more transactions (for customers other than Paco)
+-- Insert more transactions (for buyers other than Paco)
 INSERT INTO transactions (transaction_id, comic_id, customer_id, purchase_date, total_amount)
 VALUES
     (2, 2, 2, CURRENT_DATE, 18.99),
@@ -301,10 +301,10 @@ JOIN groups ON characters_groups.group_id = groups.group_id
 WHERE powers.name = 'Flight' AND groups.category = 'superhero'
 ORDER BY characters.name ASC;
 
-SELECT customers.name, COUNT(transactions.comic_id) AS comics_purchased, SUM(transactions.total_amount) AS total_spent
-FROM customers
-JOIN transactions ON customers.customer_id = transactions.customer_id
-GROUP BY customers.name
+SELECT buyers.name, COUNT(transactions.comic_id) AS comics_purchased, SUM(transactions.total_amount) AS total_spent
+FROM buyers
+JOIN transactions ON buyers.customer_id = transactions.customer_id
+GROUP BY buyers.name
 HAVING COUNT(transactions.comic_id) > 0; --Changed from 5 for 0 to check
 
 SELECT comics.category, COUNT(transactions.comic_id) AS purchases
@@ -344,8 +344,8 @@ HAVING COUNT(transactions.comic_id) >= 1; --Changed from 50 to 1 to check
 SELECT * FROM Popular;
 
 CREATE MATERIALIZED VIEW Top_Customers AS
-SELECT customers.customer_id, customers.name, COUNT(transactions.comic_id) AS purchases, SUM(transactions.total_amount) AS total_spent
-FROM customers
-JOIN transactions ON customers.customer_id = transactions.customer_id
-GROUP BY customers.customer_id, customers.name
+SELECT buyers.customer_id, buyers.name, COUNT(transactions.comic_id) AS purchases, SUM(transactions.total_amount) AS total_spent
+FROM buyers
+JOIN transactions ON buyers.customer_id = transactions.customer_id
+GROUP BY buyers.customer_id, buyers.name
 HAVING COUNT(transactions.comic_id) >= 1; --Changed to 1 to check
