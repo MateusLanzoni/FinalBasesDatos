@@ -3,136 +3,136 @@ db.character.insertMany([
     "_id": "character1",
     "name": "Spider-Man",
     "power": "Wall-crawling",
-    "weakness": "Pesticide",
+    "main_weakness": "Pesticide",
     "groups": ["Avengers"]
   },
   {
     "_id": "character2",
     "name": "Batman",
     "power": "Genius-level intellect",
-    "weakness": "Human limits",
+    "main_weakness": "Human limits",
     "groups": ["Justice League", "Avengers"]
   },
   {
     "_id": "character3",
     "name": "Wonder Woman",
     "power": "Superhuman strength",
-    "weakness": "Piercing weapons",
+    "main_weakness": "Piercing weapons",
     "groups": ["Justice League"]
   },
   {
     "_id": "character4",
     "name": "Iron Man",
     "power": "Powered armor suit",
-    "weakness": "Technology reliance",
+    "main_weakness": "Technology reliance",
     "groups": ["Avengers"]
   },
   {
     "_id": "character5",
     "name": "Captain America",
     "power": "Enhanced agility",
-    "weakness": "Human limits",
+    "main_weakness": "Human limits",
     "groups": ["Avengers"]
   },
   {
     "_id": "character6",
     "name": "Thor",
     "power": "Weather manipulation",
-    "weakness": "Mjolnir dependency",
+    "main_weakness": "Mjolnir dependency",
     "groups": ["Avengers"]
   },
   {
     "_id": "character7",
     "name": "Hulk",
     "power": "Superhuman strength",
-    "weakness": "Rage control",
+    "main_weakness": "Rage control",
     "groups": ["Avengers"]
   },
   {
     "_id": "character8",
     "name": "Superman",
     "power": "Flight",
-    "weakness": "Kryptonite",
+    "main_weakness": "Kryptonite",
     "groups": ["Justice League", "Avengers"]
   },
   {
     "_id": "character9",
     "name": "Green Lantern",
     "power": "Power ring constructs",
-    "weakness": "Needs recharge",
+    "main_weakness": "Needs recharge",
     "groups": ["Justice League"]
   },
   {
     "_id": "character10",
     "name": "Flash",
     "power": "Super speed",
-    "weakness": "Cold attacks",
+    "main_weakness": "Cold attacks",
     "groups": ["Justice League"]
   },
   {
     "_id": "character11",
     "name": "Joker",
     "power": "Master manipulator",
-    "weakness": "Mental instability",
+    "main_weakness": "Mental instability",
     "groups": ["Legion of Doom"]
   },
   {
     "_id": "character12",
     "name": "Loki",
     "power": "Shapeshifting and magic",
-    "weakness": "Pride",
+    "main_weakness": "Pride",
     "groups": ["Masters of Evil", "Avengers"]
   },
   {
     "_id": "character13",
     "name": "Thanos",
     "power": "Superhuman strength and intelligence",
-    "weakness": "Overconfidence",
+    "main_weakness": "Overconfidence",
     "groups": ["Black Order"]
   },
   {
     "_id": "character14",
     "name": "Lex Luthor",
     "power": "Genius-level intellect",
-    "weakness": "Human limits",
+    "main_weakness": "Human limits",
     "groups": ["Legion of Doom"]
   },
   {
     "_id": "character15",
     "name": "Green Goblin",
     "power": "Enhanced strength and intelligence",
-    "weakness": "Psychotic tendencies",
+    "main_weakness": "Psychotic tendencies",
     "groups": ["Sinister Six"]
   }
 ]);
 
 db.villager.insertMany([
   {
-    "_id": "villager1",
+    "_id": "sc1",
     "name": "Alfred Pennyworth",
     "description": "Bruce Wayne's loyal butler and confidant, providing guidance and support.",
     "availability": true
   },
   {
-    "_id": "villager2",
+    "_id": "sc2",
     "name": "J. Jonah Jameson",
     "description": "The editor-in-chief of the Daily Bugle, known for his distrust of Spider-Man.",
     "availability": true
   },
   {
-    "_id": "villager3",
+    "_id": "sc3",
     "name": "Mary Jane Watson",
     "description": "Peter Parker's long-time love interest and a talented actress.",
     "availability": true
   },
   {
-    "_id": "villager4",
+    "_id": "sc4",
     "name": "Commissioner Gordon",
     "description": "The dedicated police commissioner of Gotham City and an ally of Batman.",
     "availability": false
   },
   {
-    "_id": "villager5",
+    "_id": "sc5",
     "name": "Aunt May",
     "description": "Peter Parker's caring aunt who raised him and provides him with moral support.",
     "availability": false
@@ -220,9 +220,9 @@ db.comic.insertMany([
       { "characterId": "character1", "characterName": "Spider-Man" },
       { "characterId": "character11", "characterName": "Joker" }
     ],
-    "villagers": [
-      { "villagerId": "villager1", "villagerName": "Alfred Pennyworth" },
-      { "villagerId": "villager3", "villagerName": "Mary Jane Watson" }
+    "secondary_characters": [
+      { "villagerId": "sc1", "villagerName": "Alfred Pennyworth" },
+      { "villagerId": "sc3", "villagerName": "Mary Jane Watson" }
     ],
     "items": [
       { "itemId": "item1", "itemName": "Sword of Destiny" },
@@ -239,9 +239,9 @@ db.comic.insertMany([
       { "characterId": "character2", "characterName": "Batman" },
       { "characterId": "character4", "characterName": "Iron Man" }
     ],
-    "villagers": [
-      { "villagerId": "villager2", "villagerName": "J. Jonah Jameson" },
-      { "villagerId": "villager4", "villagerName": "Commissioner Gordon" }
+    "secondary_characters": [
+      { "villagerId": "sc2", "villagerName": "J. Jonah Jameson" },
+      { "villagerId": "sc4", "villagerName": "Commissioner Gordon" }
     ],
     "items": [
 
@@ -257,9 +257,9 @@ db.comic.insertMany([
       { "characterId": "character3", "characterName": "Wonder Woman" },
       { "characterId": "character8", "characterName": "Superman" }
     ],
-    "villagers": [
-      { "villagerId": "villager5", "villagerName": "Aunt May" },
-      { "villagerId": "villager1", "villagerName": "Alfred Pennyworth" }
+    "secondary_characters": [
+      { "villagerId": "sc5", "villagerName": "Aunt May" },
+      { "villagerId": "sc1", "villagerName": "Alfred Pennyworth" }
     ],
     "items": [
       { "itemId": "item3", "itemName": "Bow of Eternity" },
@@ -276,9 +276,9 @@ db.comic.insertMany([
       { "characterId": "character6", "characterName": "Thor" },
       { "characterId": "character13", "characterName": "Thanos" }
     ],
-    "villagers": [
-      { "villagerId": "villager2", "villagerName": "J. Jonah Jameson" },
-      { "villagerId": "villager3", "villagerName": "Mary Jane Watson" }
+    "secondary_characters": [
+      { "villagerId": "sc2", "villagerName": "J. Jonah Jameson" },
+      { "villagerId": "sc3", "villagerName": "Mary Jane Watson" }
     ],
     "items": [
 
@@ -294,9 +294,9 @@ db.comic.insertMany([
       { "characterId": "character10", "characterName": "Flash" },
       { "characterId": "character9", "characterName": "Green Lantern" }
     ],
-    "villagers": [
-      { "villagerId": "villager4", "villagerName": "Commissioner Gordon" },
-      { "villagerId": "villager5", "villagerName": "Aunt May" }
+    "secondary_characters": [
+      { "villagerId": "sc4", "villagerName": "Commissioner Gordon" },
+      { "villagerId": "sc5", "villagerName": "Aunt May" }
     ],
     "items": [
       { "itemId": "item2", "itemName": "Shield of Valor" },

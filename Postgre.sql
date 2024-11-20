@@ -31,7 +31,7 @@ CREATE TABLE characters (
        Each has a many to many relationship with characters. Same for group affiliations. */
 );
 
-CREATE TABLE villagers (
+CREATE TABLE secondary_characters (
     villager_id INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(1000),
@@ -80,7 +80,7 @@ CREATE TABLE characters_powers (
     PRIMARY KEY (character_id, power_id)
 );
 
-CREATE TABLE characters_weaknesses (
+CREATE TABLE main_weakness (
     character_id INT REFERENCES characters(character_id) ON DELETE CASCADE,
     weakness_id INT REFERENCES weaknesses(weakness_id) ON DELETE CASCADE,
     PRIMARY KEY (character_id, weakness_id)
@@ -257,8 +257,8 @@ VALUES
     (5, 4), -- Doctor Strange has Telepathy
     (6, 5); -- The Flash has Super Speed
 
--- Add entries in characters_weaknesses table for many-to-many relation between characters and weaknesses
-INSERT INTO characters_weaknesses (character_id, weakness_id)
+-- Add entries in main_weakness table for many-to-many relation between characters and weaknesses
+INSERT INTO main_weakness (character_id, weakness_id)
 VALUES
     (1, 1), -- Batman has weakness to Kryptonite
     (2, 1), -- Superman has weakness to Kryptonite
@@ -272,7 +272,7 @@ INSERT INTO groups (group_id, name, description, category)
 VALUES
     (1, 'Justice League', 'A team of superheroes fighting for justice.', 'superhero'),
     (2, 'Avengers', 'A group of superheroes protecting Earth.', 'superhero'),
-    (3, 'Sinister Six', 'A group of villains targeting Spider-Man.', 'villain');
+    (3, 'Sinister Six', 'A group of secondary_characters targeting Spider-Man.', 'villain');
 
 -- Add entries in characters_groups table for many-to-many relation between characters and groups
 INSERT INTO characters_groups (character_id, group_id)
@@ -334,14 +334,14 @@ GROUP BY comics.title;
 
 -- 4) Views
 
-CREATE VIEW Popular_Comics AS
+CREATE VIEW Popular AS
 SELECT comics.title, COUNT(transactions.comic_id) AS purchase_count
 FROM comics
 JOIN transactions ON comics.comic_id = transactions.comic_id
 GROUP BY comics.title
 HAVING COUNT(transactions.comic_id) >= 1; --Changed from 50 to 1 to check
 
-SELECT * FROM Popular_Comics;
+SELECT * FROM Popular;
 
 CREATE MATERIALIZED VIEW Top_Customers AS
 SELECT customers.customer_id, customers.name, COUNT(transactions.comic_id) AS purchases, SUM(transactions.total_amount) AS total_spent
