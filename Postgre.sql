@@ -3,7 +3,6 @@ CREATE TYPE affiliation AS ENUM ('superhero', 'villain');
 
 CREATE TYPE comic_category AS ENUM ('action', 'adventure', 'fantasy', 'sci-fi', 'horror', 'comedy');
 
-
 CREATE TABLE comics (
     comic_id INT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
@@ -105,9 +104,7 @@ CREATE TABLE special_offers (
     customer_birthday DATE NOT NULL
 );
 
-
 -- 2) Trigger Implementation
-
 CREATE OR REPLACE FUNCTION add_to_special_offers()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -321,7 +318,6 @@ JOIN comics_mortal_arms ON comics.comic_id = comics_mortal_arms.comic_id
 GROUP BY comics.title;
 
 -- 4) Views
-
 CREATE VIEW Popular AS
 SELECT comics.title, COUNT(transactions.comic_id) AS purchase_count
 FROM comics
