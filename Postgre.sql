@@ -27,8 +27,6 @@ CREATE TABLE weaknesses (
 CREATE TABLE characters (
     character_id INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
-    /* Created separate tables for powers and weaknesses for easy management.
-       Each has a many to many relationship with characters. Same for group affiliations. */
 );
 
 CREATE TABLE secondary_characters (
@@ -124,14 +122,10 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
---Now this trigger is used every time there´s a new transaction
 CREATE TRIGGER trigger_special_offers
 AFTER INSERT ON transactions
 FOR EACH ROW
 EXECUTE FUNCTION add_to_special_offers();
-
---Some entries to prove the trigger (used chat im not making them all -_-)
 
 -- Insert a comic with ID 1
 INSERT INTO comics (comic_id, title, description, price, category)
@@ -145,15 +139,14 @@ VALUES (1, 'Paco', '1985-06-15', 'paco@example.com');
 INSERT INTO transactions (transaction_id, comic_id, customer_id, purchase_date, total_amount)
 VALUES (1, 1, 1, CURRENT_DATE, 19.99);
 
--- Optionally, insert sample data for characters, mortal arms, and the join tables
 
--- Sample data for characters
+-- characters
 INSERT INTO characters (character_id, name)
 VALUES
     (1, 'Batman'),
     (2, 'Superman');
 
--- Sample data for mortal arms
+-- mortal arms
 INSERT INTO mortal_arms (item_id, name, description, availability)
 VALUES
     (1, 'Batarang', 'Bat-shaped throwing weapon used by Batman.', TRUE),
@@ -172,7 +165,7 @@ VALUES
     (1, 2); -- Kryptonite Ring appears in the comic
 
 --More data
--- Insert more comics (different from the ones already added)
+-- comics
 INSERT INTO comics (comic_id, title, description, price, category)
 VALUES
     (2, 'Justice League: Dark Reign', 'The Justice League faces a new dark threat.', 18.99, 'action'),
@@ -181,7 +174,7 @@ VALUES
     (5, 'Spider-Man: Into the Shadows', 'Spider-Man investigates a new criminal group.', 12.99, 'adventure'),
     (6, 'Doctor Strange: Mystic Arts', 'Doctor Strange explores magical realms.', 16.99, 'fantasy');
 
--- Insert more buyers (different from Paco)
+-- buyers
 INSERT INTO buyers (customer_id, name, birthday, email)
 VALUES
     (2, 'Alice', '1992-07-11', 'alice@example.com'),
@@ -189,7 +182,7 @@ VALUES
     (4, 'Catherine', '1975-10-05', 'catherine@example.com'),
     (5, 'David', '2000-12-20', 'david@example.com');
 
--- Insert more transactions (for buyers other than Paco)
+-- transactions
 INSERT INTO transactions (transaction_id, comic_id, customer_id, purchase_date, total_amount)
 VALUES
     (2, 2, 2, CURRENT_DATE, 18.99),
@@ -197,7 +190,7 @@ VALUES
     (4, 4, 4, CURRENT_DATE, 13.99),
     (5, 5, 5, CURRENT_DATE, 12.99);
 
--- Insert more characters (other than Batman and Superman)
+-- characters
 INSERT INTO characters (character_id, name)
 VALUES
     (3, 'Wonder Woman'),
@@ -206,14 +199,14 @@ VALUES
     (6, 'The Flash'),
     (7, 'Aquaman');
 
--- Insert additional mortal arms (different from Batarang and Kryptonite Ring)
+-- mortal arms
 INSERT INTO mortal_arms (item_id, name, description, availability)
 VALUES
     (3, 'Lasso of Truth', 'Wonder Woman’s magical lasso that compels truth-telling.', TRUE),
     (4, 'Web-Shooter', 'Spider-Man’s device for shooting webs.', TRUE),
     (5, 'Trident of Atlantis', 'Aquaman’s trident, symbol of his power.', TRUE);
 
--- Add entries in characters_comics table for many-to-many relation
+-- characters_comics
 INSERT INTO characters_comics (character_id, comic_id)
 VALUES
     (3, 2), -- Wonder Woman appears in "Justice League: Dark Reign"
@@ -222,14 +215,14 @@ VALUES
     (6, 3), -- The Flash appears in "Batman: Arkham Unleashed"
     (7, 2); -- Aquaman appears in "Justice League: Dark Reign"
 
--- Add entries in comics_mortal_arms table for many-to-many relation
+-- comics_mortal_arms
 INSERT INTO comics_mortal_arms (comic_id, item_id)
 VALUES
     (2, 3), -- "Justice League: Dark Reign" includes Lasso of Truth
     (5, 4), -- "Spider-Man: Into the Shadows" includes Web-Shooter
     (6, 5); -- "Doctor Strange: Mystic Arts" includes Trident of Atlantis
 
--- Insert sample data into powers table
+-- power
 INSERT INTO powers (power_id, name, description)
 VALUES
     (1, 'Super Strength', 'The ability to exert force beyond normal limits.'),
@@ -238,7 +231,7 @@ VALUES
     (4, 'Telepathy', 'The power to read others’ thoughts.'),
     (5, 'Super Speed', 'The ability to move at incredible speeds.');
 
--- Insert sample data into weaknesses table
+-- weaknesses
 INSERT INTO weaknesses (weakness_id, name, description)
 VALUES
     (1, 'Kryptonite', 'Weakness to the mineral kryptonite.'),
@@ -247,7 +240,7 @@ VALUES
     (4, 'Water', 'Weakness to water exposure.'),
     (5, 'Fire', 'Vulnerability to fire.');
 
--- Add entries in characters_powers table for many-to-many relation between characters and powers
+-- characters_powers
 INSERT INTO characters_powers (character_id, power_id)
 VALUES
     (1, 1), -- Batman has Super Strength
@@ -257,7 +250,7 @@ VALUES
     (5, 4), -- Doctor Strange has Telepathy
     (6, 5); -- The Flash has Super Speed
 
--- Add entries in main_weakness table for many-to-many relation between characters and weaknesses
+-- main_weakness
 INSERT INTO main_weakness (character_id, weakness_id)
 VALUES
     (1, 1), -- Batman has weakness to Kryptonite
@@ -267,14 +260,14 @@ VALUES
     (5, 2), -- Doctor Strange is vulnerable to Magic
     (6, 4); -- The Flash has a weakness to Water
 
--- Insert sample data into groups table
+-- groups
 INSERT INTO groups (group_id, name, description, category)
 VALUES
     (1, 'Justice League', 'A team of superheroes fighting for justice.', 'superhero'),
     (2, 'Avengers', 'A group of superheroes protecting Earth.', 'superhero'),
     (3, 'Sinister Six', 'A group of secondary_characters targeting Spider-Man.', 'villain');
 
--- Add entries in characters_groups table for many-to-many relation between characters and groups
+-- characters_groups
 INSERT INTO characters_groups (character_id, group_id)
 VALUES
     (1, 1), -- Batman is part of Justice League
@@ -286,11 +279,6 @@ VALUES
 --3) Queries
 SELECT title, price
 FROM comics WHERE price < 20 ORDER BY title ASC;
-
-
-/*This one was way more difficult than it should have been
-  so im not doing the 3rd query
- */
 
 SELECT characters.name
 FROM characters
